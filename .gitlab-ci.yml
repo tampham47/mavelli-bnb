@@ -1,0 +1,34 @@
+image: node:latest
+
+stages:
+  - deploy
+
+deploy_stag:
+  stage: deploy
+  before_script:
+    # generate ssh key
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - mkdir -p _deploy
+    - echo -e "$SSH_PRIVATE_KEY" > _deploy/goingsunny-sg.pem
+    - chmod 700 _deploy/goingsunny-sg.pem
+    - ssh-keyscan -t rsa 13.215.51.234 >> ~/.ssh/known_hosts
+  script:
+    - npm run deploy:prod
+  only:
+    - develop
+
+deploy_prod:
+  stage: deploy
+  before_script:
+    # generate ssh key
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - mkdir -p _deploy
+    - echo -e "$SSH_PRIVATE_KEY" > _deploy/goingsunny-sg.pem
+    - chmod 700 _deploy/goingsunny-sg.pem
+    - ssh-keyscan -t rsa 13.215.51.234 >> ~/.ssh/known_hosts
+  script:
+    - npm run deploy:prod
+  only:
+    - master

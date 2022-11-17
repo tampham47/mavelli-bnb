@@ -1,0 +1,20 @@
+{
+  "apps": [
+    {
+      "name": "stg-mavelli-bnb",
+      "script": "./build/index.js",
+      "exec_mode": "fork_mode",
+      "instances": 1,
+      "args": "start",
+      "watch": false,
+      "ignore_watch": [
+        "node_modules",
+        "log"
+      ],
+      "watch_options": {
+        "followSymlinks": false
+      },
+      "env_production": {}
+    }
+  ]
+}
