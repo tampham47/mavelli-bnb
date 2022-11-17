@@ -1,0 +1,22 @@
+name: Github CICD
+
+on:
+  push:
+    branches:
+      - test-cicd
+
+jobs:
+  deploy:
+    name: Deploy Changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare PEM file
+      - run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          mkdir -p _deploy
+          echo -e "$SSH_PRIVATE_KEY" > _deploy/goingsunny-sg.pem
+          chmod 700 _deploy/goingsunny-sg.pem
+          ssh-keyscan -t rsa 13.215.51.234 >> ~/.ssh/known_hosts
+      - name: Deploy
+      - run: npm run deploy:prod
