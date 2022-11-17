@@ -3,8 +3,7 @@ name: Github CICD
 on:
   push:
     branches:
-      - test-cicd
-
+      - develop
 jobs:
   deploy:
     name: Deploy Changes
