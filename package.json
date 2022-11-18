@@ -17,8 +17,9 @@
     "prettier-watch:darwin:linux": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
     "prettier-watch:default": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
     "login": "ssh -i _deploy/goingsunny-sg.pem ec2-user@13.215.51.234",
-    "deploy:prod": "npm run login 'cd prod/mavelli-bnb && git reset --hard && git checkout develop && git pull && yarn install && yarn run build && pm2 startOrRestart pm2-prod.json --env production'",
-    "deploy:stag": "npm run login 'cd stag/mavelli-bnb && git reset --hard && git checkout develop && git pull && yarn install && yarn run build && pm2 startOrRestart pm2-stag.json --env production'",
+    "deploy:sg-server": "npm run login 'cd prod/mavelli-bnb && git reset --hard && git fetch && git checkout sg-server && git pull && yarn install && yarn run build && pm2 startOrRestart pm2-prod.json --env production'",
+    "deploy:prod": "npm run login 'cd prod/mavelli-bnb && git reset --hard && git fetch && git checkout develop && git pull && yarn install && yarn run build && pm2 startOrRestart pm2-prod.json --env production'",
+    "deploy:stag": "npm run login 'cd stag/mavelli-bnb && git reset --hard && git fetch && git checkout develop && git pull && yarn install && yarn run build && pm2 startOrRestart pm2-stag.json --env production'",
     "test": "jest --watch",
     "test:dev": "jest --watchAll"
   },
