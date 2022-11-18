@@ -1,6 +1,6 @@
 # Mavelli Bot
 
-Mavelli là auto trading bot cho Binance. Mục tiêu của Mavelli không phải là để đánh bại thị trường, mà là đi theo thị trường, và giúp bạn kiếm được 4%-6% lợi nhuận mỗi tháng.
+Mavelli là auto trading bot cho Binance. Mục tiêu của Mavelli không phải là để đánh bại thị trường, mà là đi theo thị trường, và mục tiêu của Mavelli là kiếm được từ 4-6% lợi nhuận mỗi tháng từ việc trading.
 
 Mavelli quan niệm rằng, vũ khí tối thượng trong trading không phải là kiến thức, hay kỹ năng, mà đó chính là thời gian - sự kiên nhẫn. Vì thế cách hoạt động của Mavelli cũng khá đơn giản.
 
