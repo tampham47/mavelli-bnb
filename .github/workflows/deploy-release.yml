@@ -3,7 +3,9 @@ name: Github CICD
 on:
   push:
     branches:
-      - sg-server
+      - 'release/**'
+      - 'releases/**'
+      - 'hotfix/**'
 jobs:
   deploy:
     name: Deploy Changes
