@@ -3,9 +3,7 @@ name: Github CICD
 on:
   push:
     branches:
-      - 'release/**'
-      - 'releases/**'
-      - 'hotfix/**'
+      - release
 jobs:
   deploy:
     name: Deploy Changes
@@ -22,4 +20,4 @@ jobs:
           chmod 700 _deploy/goingsunny-sg.pem
           ssh-keyscan -t rsa 13.215.51.234 >> ~/.ssh/known_hosts
       - name: Deploy
-        run: npm run deploy:sg-server
+        run: npm run deploy:release
