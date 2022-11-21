@@ -43,14 +43,14 @@ export const strategies: Strategy[] = [
     symbol: 'SRMUSDT',
     delta: -5.55 * delta,
     qty: 440 * qtyDelta,
-    tp: 7.5,
+    tp: 15.25,
     ticksize: 4,
   },
   {
     symbol: 'DYDXUSDT',
     delta: -2.95 * delta,
     qty: 50 * qtyDelta,
-    tp: 7.5,
+    tp: 15.25,
     ticksize: 4,
   },
 ];
