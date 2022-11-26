@@ -2,7 +2,7 @@ import { orderBy } from 'lodash';
 
 import BalanceFactory from '../factory/BalanceFactory';
 import { getAssetBySymbol } from './symbol';
-import { strategies } from '../strategies';
+import { Strategy } from '../strategies';
 import { client } from '../client';
 import { getChangeByDelta, getPriceByDelta } from './number';
 import { Position } from '../types/Position';
@@ -10,6 +10,7 @@ import { Order } from '../types/Order';
 
 export const getPosition = async (
   symbol: string,
+  strategy: Strategy,
 ): Promise<Position | undefined> => {
   console.log(
     'getPosition',
@@ -17,7 +18,6 @@ export const getPosition = async (
     BalanceFactory.get(getAssetBySymbol(symbol)),
   );
 
-  const strategy = strategies.find((i) => i.symbol === symbol);
   if (!strategy) {
     return undefined;
   }
@@ -75,7 +75,7 @@ export const getPosition = async (
     symbol,
     quantity: Math.floor(quantity * Math.pow(10, 4)) / Math.pow(10, 4),
     avgPrice,
-    tp: strategy.takeProfit,
+    takeProfit: strategy.takeProfit,
     tpPrice: getPriceByDelta(avgPrice, strategy.takeProfit, strategy.tickSize),
     expectedPnl: getChangeByDelta(quantity * avgPrice, strategy.takeProfit),
     valid: true,

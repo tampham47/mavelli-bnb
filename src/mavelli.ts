@@ -33,7 +33,7 @@ export class Mavelli {
   };
 
   getPosition = async () => {
-    this.position = await getPosition(this.symbol);
+    this.position = await getPosition(this.symbol, this.strategy);
     console.log('R. POSITION', this.symbol);
     console.table([this.position]);
   };
@@ -98,6 +98,7 @@ export class Mavelli {
         this.lastPrice,
         this.position.avgPrice,
         this.strategy.takeProfit,
+        this.strategy.tickSize,
       )
     ) {
       this.position.valid = false;
@@ -110,7 +111,13 @@ export class Mavelli {
         newClientOrderId: `${BOT_PREFIX}-${Date.now()}`,
       };
 
-      console.log('R. PLACE TAKE PROFIT ORDER', order.quantity, 'MARKET');
+      console.log(
+        'R. PLACE TAKE PROFIT ORDER',
+        this.lastPrice,
+        this.position.avgPrice,
+        this.strategy.takeProfit,
+        order.quantity,
+      );
       // @ts-ignore
       await client.order(order);
     }

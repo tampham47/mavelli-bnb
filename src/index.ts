@@ -34,7 +34,7 @@ const onLastPrice = (trade: Trade) => {
 
 const onOrderMatch = async (data: any) => {
   console.log(
-    'R. ORDER MATCH',
+    'R. ORDER UPDATE',
     data.symbol,
     data.orderStatus,
     data.quantity,

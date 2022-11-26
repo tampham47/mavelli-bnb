@@ -54,7 +54,7 @@ export const strategies: Strategy[] = [
     buyPrice: -3.75,
     qty: 1000,
     takeProfit: 7.5,
-    tickSize: 4,
     active: true,
+    tickSize: 4,
   },
 ];
