@@ -2,8 +2,8 @@ export type Position = {
   symbol: string;
   quantity: number;
   avgPrice: number;
-  tpPercentage: number;
   tp: number;
+  tpPrice: number;
   expectedPnl: number;
   valid: boolean;
 };
