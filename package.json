@@ -55,6 +55,7 @@
     "@binance/connector": "^2.0.0-rc.3",
     "binance-api-node": "https://github.com/tampham47/binance-api-node",
     "dotenv": "^16.0.3",
+    "firebase-admin": "^11.3.0",
     "lodash": "^4.17.21"
   }
 }

@@ -1,45 +1,60 @@
 export type Strategy = {
   symbol: string;
   qty: number;
-  delta: number;
-  tp: number;
-  ticksize: number;
+  buyPrice: number;
+  takeProfit: number;
+  tickSize: number;
+  active: boolean;
+};
+
+export const defaultValue: Strategy = {
+  symbol: '',
+  buyPrice: -2.25,
+  takeProfit: 3.25,
+  qty: 0.1,
+  tickSize: 2,
+  active: false,
 };
 
 export const strategies: Strategy[] = [
   // {
   //   symbol: 'BTCUSDT',
-  //   delta: -1.25,
+  //   buyPrice: -1.25,
   //   qty: 0.006,
-  //   tp: 2.5,
-  //   ticksize: 2,
+  //   takeProfit: 2.5,
+  //   tickSize: 2,
+  //   active: false,
   // },
   // {
   //   symbol: 'ETHUSDT',
-  //   delta: -1.55,
+  //   buyPrice: -1.55,
   //   qty: 0.09,
-  //   tp: 2.5,
-  //   ticksize: 2,
+  //   takeProfit: 2.5,
+  //   tickSize: 2,
+  //   active: false,
   // },
   // {
   //   symbol: 'SOLUSDT',
-  //   delta: -2.75,
+  //   buyPrice: -2.75,
   //   qty: 8.5,
-  //   tp: 2.5,
-  //   ticksize: 2,
+  //   takeProfit: 2.5,
+  //   tickSize: 2,
+  //   active: false,
   // },
   // {
   //   symbol: 'BNBUSDT',
-  //   delta: -2.45,
+  //   buyPrice: -2.45,
   //   qty: 0.39,
-  //   tp: 7.5,
-  //   ticksize: 1,
+  //   takeProfit: 7.5,
+  //   tickSize: 1,
+  //   active: false,
   // },
   {
     symbol: 'DOGEUSDT',
-    delta: -3.75,
+    buyPrice: -3.75,
     qty: 1000,
-    tp: 7.5,
-    ticksize: 4,
+    takeProfit: 7.5,
+    tickSize: 4,
+    active: true,
   },
 ];

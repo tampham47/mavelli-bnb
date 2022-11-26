@@ -1,3 +1,5 @@
+import { orderBy } from 'lodash';
+import { Strategy } from '../strategies';
 import { Order } from '../types/Order';
 
 export const getOrderTable = (orders: Order[]) => {
@@ -11,4 +13,8 @@ export const getOrderTable = (orders: Order[]) => {
     type: i.type,
     time: i.time,
   }));
+};
+
+export const getStrategyTable = (strategies: Strategy[]) => {
+  return orderBy(strategies, ['takeProfit'], ['desc']);
 };

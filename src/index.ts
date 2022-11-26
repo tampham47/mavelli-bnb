@@ -1,17 +1,21 @@
 /* eslint-disable no-console */
 import { throttle } from 'lodash';
 
-import { strategies } from './strategies';
+import { strategies, Strategy } from './strategies';
 import { Trade } from './types/Trade';
 import { client } from './client';
 import BalanceFactory from './factory/BalanceFactory';
 import { Mavelli } from './mavelli';
+import {
+  fetchStrategies,
+  FirebaseStrategy,
+  onDataChange,
+} from './firestore/strategies';
+import { mergeStrategies } from './utils/strategy';
+import { getStrategyTable } from './utils/table';
 
+let AGG_STRATEGIES: Strategy[] = strategies;
 const BOT: Record<string, Mavelli> = {};
-
-strategies.map((i) => {
-  BOT[i.symbol] = new Mavelli(i.symbol, i);
-});
 
 client.time().then((time) => {
   console.log('STARTED', time);
@@ -46,6 +50,38 @@ const onOrderMatch = async (data: any) => {
 };
 
 (async () => {
+  const strategyList = await fetchStrategies();
+  console.log('strategyList', strategyList);
+  AGG_STRATEGIES = mergeStrategies(AGG_STRATEGIES, strategyList);
+  AGG_STRATEGIES.forEach((i) => {
+    BOT[i.symbol] = new Mavelli(i.symbol, i);
+  });
+
+  onDataChange((list: FirebaseStrategy[]) => {
+    AGG_STRATEGIES = mergeStrategies(AGG_STRATEGIES, list);
+    console.log('R. STRATEGY');
+    console.table(getStrategyTable(AGG_STRATEGIES));
+
+    const updatedSymbols = list.map((i) => i.symbol).join(', ');
+    AGG_STRATEGIES.filter((i) => updatedSymbols.indexOf(i.symbol) >= 0).forEach(
+      (i) => {
+        const symbol = i.symbol;
+        if (!symbol) return;
+
+        const newStrategy = {
+          ...strategies.find((i) => i.symbol === symbol),
+          ...i,
+        } as Strategy;
+
+        if (BOT[symbol]) {
+          BOT[symbol].setStrategy(newStrategy);
+        } else {
+          BOT[symbol] = new Mavelli(symbol, i);
+        }
+      },
+    );
+  });
+
   await BalanceFactory.sync();
 
   client.ws.user(async (data) => {

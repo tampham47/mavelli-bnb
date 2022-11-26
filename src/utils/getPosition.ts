@@ -67,17 +67,17 @@ export const getPosition = async (
   }
 
   const avgPrice = quantity
-    ? Math.round((price / total) * Math.pow(10, strategy.ticksize)) /
-      Math.pow(10, strategy.ticksize)
+    ? Math.round((price / total) * Math.pow(10, strategy.tickSize)) /
+      Math.pow(10, strategy.tickSize)
     : 0;
 
   return {
     symbol,
     quantity: Math.floor(quantity * Math.pow(10, 4)) / Math.pow(10, 4),
     avgPrice,
-    tp: strategy.tp,
-    tpPrice: getPriceByDelta(avgPrice, strategy.tp, strategy.ticksize),
-    expectedPnl: getChangeByDelta(quantity * avgPrice, strategy.tp),
+    tp: strategy.takeProfit,
+    tpPrice: getPriceByDelta(avgPrice, strategy.takeProfit, strategy.tickSize),
+    expectedPnl: getChangeByDelta(quantity * avgPrice, strategy.takeProfit),
     valid: true,
   };
 };

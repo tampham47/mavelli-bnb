@@ -26,6 +26,12 @@ export class Mavelli {
     this.init();
   }
 
+  setStrategy = async (strategy: Strategy) => {
+    this.strategy = strategy;
+    await this.getPosition();
+    this.start();
+  };
+
   getPosition = async () => {
     this.position = await getPosition(this.symbol);
     console.log('R. POSITION', this.symbol);
@@ -91,7 +97,7 @@ export class Mavelli {
       matchExpectedPrice(
         this.lastPrice,
         this.position.avgPrice,
-        this.strategy.tp,
+        this.strategy.takeProfit,
       )
     ) {
       this.position.valid = false;
@@ -125,8 +131,8 @@ export class Mavelli {
       quantity: this.strategy.qty,
       price: getPriceByDelta(
         this.lastPrice,
-        this.strategy.delta,
-        this.strategy.ticksize,
+        this.strategy.buyPrice,
+        this.strategy.tickSize,
       ),
       newClientOrderId: `${BOT_PREFIX}-${Date.now()}`,
     };
