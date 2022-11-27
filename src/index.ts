@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
+import * as dotenv from 'dotenv';
 import { throttle } from 'lodash';
 
-import { strategies, Strategy } from './strategies';
-import { Trade } from './types/Trade';
 import { client } from './client';
+import { Strategy } from './strategies';
+import { Trade } from './types/Trade';
 import BalanceFactory from './factory/BalanceFactory';
 import { Mavelli } from './mavelli';
 import {
@@ -13,6 +14,11 @@ import {
 } from './firestore/strategies';
 import { mergeStrategies } from './utils/strategy';
 import { getStrategyTable } from './utils/table';
+
+dotenv.config();
+
+// @ts-ignore
+import strategies from '../strategies.json';
 
 let AGG_STRATEGIES: Strategy[] = strategies;
 const BOT: Record<string, Mavelli> = {};
@@ -72,7 +78,7 @@ const onOrderMatch = async (data: any) => {
         if (!symbol) return;
 
         const newStrategy = {
-          ...strategies.find((i) => i.symbol === symbol),
+          ...strategies.find((i: Strategy) => i.symbol === symbol),
           ...i,
         } as Strategy;
 
@@ -101,7 +107,7 @@ const onOrderMatch = async (data: any) => {
     }
   });
 
-  strategies.map(async (i) => {
+  AGG_STRATEGIES.map(async (i: Strategy) => {
     const onTradeThrottle = throttle(onLastPrice, 2000);
 
     client.ws.trades(i.symbol, (data: any) => {
