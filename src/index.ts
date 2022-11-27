@@ -47,11 +47,14 @@ const onOrderMatch = async (data: any) => {
   if (data.orderStatus === 'FILLED' && BOT[symbol]) {
     BOT[symbol].onOrderMatch(price);
   }
+
+  if (data.orderStatus === 'CANCELED' && BOT[symbol]) {
+    BOT[symbol].onCancel();
+  }
 };
 
 (async () => {
   const strategyList = await fetchStrategies();
-  console.log('strategyList', strategyList);
   AGG_STRATEGIES = mergeStrategies(AGG_STRATEGIES, strategyList);
   AGG_STRATEGIES.forEach((i) => {
     BOT[i.symbol] = new Mavelli(i.symbol, i);

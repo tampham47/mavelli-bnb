@@ -60,6 +60,11 @@ export class Mavelli {
     this.blocking = false;
   };
 
+  onCancel = async () => {
+    this.lastPrice = 0;
+    this.start();
+  };
+
   onOrderMatch = async (lastPrice: number) => {
     this.lastPrice = lastPrice;
     await this.getPosition();
@@ -79,7 +84,7 @@ export class Mavelli {
 
   cancelOrders = async (symbol: string) => {
     const orders = (await client.openOrders({ symbol })) || [];
-    return Promise.all([
+    await Promise.all([
       orders.map((i) =>
         client.cancelOrder({
           symbol,
@@ -87,6 +92,7 @@ export class Mavelli {
         }),
       ),
     ]);
+    return orders.length;
   };
 
   placeTpOrder = async () => {
@@ -129,7 +135,10 @@ export class Mavelli {
     if (!this.lastPrice) return;
 
     console.log('R. CANCEL OPEN ORDERS', this.symbol);
-    await this.cancelOrders(this.symbol);
+    const t = await this.cancelOrders(this.symbol);
+
+    // wait for cancel event to trigger new orders
+    if (t !== 0) return;
 
     const order = {
       symbol: this.symbol,
