@@ -138,7 +138,7 @@ export class Mavelli {
     const t = await this.cancelOrders(this.symbol);
 
     // wait for cancel event to trigger new orders
-    if (t !== 0) return;
+    if (t !== 0 || !this.strategy.active) return;
 
     const order = {
       symbol: this.symbol,
